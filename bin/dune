@@ -1,4 +1,6 @@
 (executable
  (name super_programming_language)
  (public_name super-programming-language)
- (libraries console.lib))
+ (libraries console.lib)
+ (preprocess
+  (pps ppx_deriving.show)))
