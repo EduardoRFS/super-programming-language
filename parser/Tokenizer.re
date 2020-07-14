@@ -30,6 +30,10 @@ let tokenize = buf =>
     let content = read_until_quote("");
     Ok(STRING(content));
   | identifier => Ok(IDENTIFIER(lexeme(buf)))
+  | named_parameter =>
+    let string = lexeme(buf);
+    let name = String.sub(string, 0, String.length(string) - 1);
+    Ok(PARAMETER(name));
   | "</" => Ok(CLOSE_TAG)
   | '<' => Ok(OPEN_TAG)
   | '>' => Ok(GREATER_THAN)
