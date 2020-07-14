@@ -9,8 +9,8 @@ type value =
   | String(string)
   | Float(float)
   | Boolean(bool)
-  | Function(identifier, expression)
-  | Native(value => result(value, string));
+  | Function(identifier, expression) // TODO: parameters in defined functions
+  | Native((list((identifier, value)), value) => result(value, string));
 
 let (let.ok) = Result.bind;
 
@@ -22,11 +22,21 @@ let rec eval = (env: Env.t(value), expr) =>
   | Identifier(identifier) =>
     Env.find_opt(identifier, env)
     |> Option.to_result(~none="identifier not found")
-  | Apply(fn, argument) =>
+  | Apply(fn, named_arguments, argument) =>
     let.ok fn_value = eval(env, fn);
+    let.ok named_arguments =
+      List.fold_left(
+        (args, (name, arg)) => {
+          let.ok args = args;
+          let.ok arg = eval(env, arg);
+          Ok([(name, arg), ...args]);
+        },
+        Ok([]),
+        named_arguments,
+      );
     let.ok argument = eval(env, argument);
     switch (fn_value) {
-    | Native(fn) => fn(argument)
+    | Native(fn) => fn(named_arguments, argument)
     | Function(parameter, body) =>
       let env = Env.add(parameter, argument, env);
       eval(env, body);

@@ -3,7 +3,7 @@ type t =
   | NUMBER(float)
   | STRING(string)
   | IDENTIFIER(string)
-  | PARAMETER(string)
+  | ATTRIBUTE(string)
   | OPEN_TAG
   | CLOSE_TAG
   | GREATER_THAN

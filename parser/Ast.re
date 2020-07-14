@@ -11,6 +11,6 @@ type expression =
   | Void
   | Literal(literal)
   | Identifier(identifier)
-  | Apply(expression, expression)
+  | Apply(expression, list((string, expression)), expression)
   | Function(identifier, expression)
   | Binding((identifier, expression), expression);

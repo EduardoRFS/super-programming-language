@@ -6,7 +6,7 @@ open Ast
 %token <float> NUMBER
 %token <string> STRING
 %token <string> IDENTIFIER
-%token <string> PARAMETER
+%token <string> ATTRIBUTE
 %token OPEN_TAG
 %token CLOSE_TAG
 %token GREATER_THAN
@@ -21,20 +21,30 @@ let primitive ==
   | n = NUMBER; { Literal (Float n) }
   | i = IDENTIFIER; { Identifier i }
 
+let attribute ==
+  | name = ATTRIBUTE; value = primitive; { (name, value) }
+
 let expression :=
   | primitive
   | WHITESPACE; expr = expression;  { expr }
-  | OPEN_TAG; name = IDENTIFIER; WHITESPACE?; GREATER_THAN;
+  | OPEN_TAG;
+      name = IDENTIFIER;
+      parameters = separated_list(WHITESPACE, attribute);
+      WHITESPACE?;
+    GREATER_THAN;
     args = separated_list(WHITESPACE, expression);
-    CLOSE_TAG; close_name = IDENTIFIER; WHITESPACE?; GREATER_THAN; {
+    CLOSE_TAG;
+      close_name = IDENTIFIER;
+      WHITESPACE?;
+    GREATER_THAN; {
       if name <> close_name then failwith "grr " else ();
       let (first_arg,remaining) =
         match args with
         | first_arg::remaining -> (first_arg, remaining)
         | [] -> (Void, []) in
       List.fold_left
-        (fun node -> fun arg -> Apply (node, arg))
-        (Apply (Identifier name, first_arg))
+        (fun node -> fun arg -> Apply (node, [], arg))
+        (Apply (Identifier name, parameters, first_arg))
         remaining
     }
 

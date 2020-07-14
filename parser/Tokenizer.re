@@ -33,7 +33,7 @@ let tokenize = buf =>
   | named_parameter =>
     let string = lexeme(buf);
     let name = String.sub(string, 0, String.length(string) - 1);
-    Ok(PARAMETER(name));
+    Ok(ATTRIBUTE(name));
   | "</" => Ok(CLOSE_TAG)
   | '<' => Ok(OPEN_TAG)
   | '>' => Ok(GREATER_THAN)
