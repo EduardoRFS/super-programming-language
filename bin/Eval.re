@@ -1,3 +1,4 @@
+open Parser;
 open Ast;
 
 module Env = Map.Make(String);
