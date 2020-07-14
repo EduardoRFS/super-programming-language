@@ -1,0 +1,5 @@
+(library
+ (name parser)
+ (public_name super-programming-language.parser)
+ (preprocess
+  (pps sedlex.ppx ppx_deriving.show)))
