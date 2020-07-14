@@ -2,20 +2,21 @@ open Eval;
 
 include Env;
 
-let sum =
+let sum = _ =>
   fun
   | Float(a) =>
     Native(
-      (
-        fun
-        | Float(b) => Ok(Float(a +. b))
-        | _ => failwith("something is not something")
-      ),
+      _ =>
+        (
+          fun
+          | Float(b) => Ok(Float(a +. b))
+          | _ => failwith("something is not something")
+        ),
     )
     |> Result.ok
   | _ => Error("something is not something");
 
-let log = value => {
+let log = (_, value) => {
   Console.log(Eval.show_value(value));
   Ok(Void);
 };
