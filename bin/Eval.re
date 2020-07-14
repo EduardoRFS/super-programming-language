@@ -5,7 +5,9 @@ module Env = Map.Make(String);
 [@deriving show]
 type value =
   | Void
-  | Literal(literal)
+  | String(string)
+  | Float(float)
+  | Boolean(bool)
   | Function(identifier, expression)
   | Native(value => result(value, string));
 
@@ -13,7 +15,8 @@ let (let.ok) = Result.bind;
 
 let rec eval = (env: Env.t(value), expr) =>
   switch (expr) {
-  | Ast.Literal(literal) => Ok(Literal(literal))
+  | Ast.Literal(String(string)) => Ok(String(string))
+  | Literal(Float(float)) => Ok(Float(float))
   | Identifier(identifier) =>
     Env.find_opt(identifier, env)
     |> Option.to_result(~none="identifier not found")

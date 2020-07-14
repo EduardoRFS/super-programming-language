@@ -4,8 +4,6 @@ type identifier = string;
 [@deriving show]
 type literal =
   | String(string)
-  | Boolean(bool)
-  | Integer(int)
   | Float(float);
 
 [@deriving show]
