@@ -16,13 +16,14 @@ open Ast
 %start <Ast.expression option> expression_value
 %%
 
-let primitive :=
+let primitive ==
   | s = STRING; { Literal (String s) }
   | n = NUMBER; { Literal (Float n) }
   | i = IDENTIFIER; { Identifier i }
 
 let expression :=
   | primitive
+  | WHITESPACE; expr = expression;  { expr }
   | OPEN_TAG; name = IDENTIFIER; WHITESPACE?; GREATER_THAN;
     args = separated_list(WHITESPACE, expression);
     CLOSE_TAG; close_name = IDENTIFIER; WHITESPACE?; GREATER_THAN; {

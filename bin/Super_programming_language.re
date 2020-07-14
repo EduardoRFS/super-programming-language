@@ -14,18 +14,12 @@ let initial_env = Env.initial_env;
 // | Error(error) => failwith(error)
 // };
 
-open Parser.Tokenizer;
+// read_all({|<log>"abc"</log>|});
 
-let read_all = code => {
-  let buf = Sedlexing.Utf8.from_string(code);
-  let rec read = acc =>
-    switch (tokenize(buf)) {
-    | Ok(EOF) => acc |> List.rev
-    | Error(error) => failwith("error " ++ error)
-    | Ok(token) => read([token, ...acc])
-    };
-  let tokens = read([]);
-  tokens |> List.map(Parser.Token.show) |> List.iter(print_endline);
-};
+open Parser;
 
-read_all({|<log>"abc"</log>|});
+let ast = parse({|
+  <log><sum>2 4</sum></log>
+|}) |> Option.get;
+
+Eval.eval(Env.initial_env, ast);

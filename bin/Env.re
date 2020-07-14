@@ -2,7 +2,7 @@ open Eval;
 
 include Env;
 
-let plus =
+let sum =
   fun
   | Float(a) =>
     Native(
@@ -14,6 +14,7 @@ let plus =
     )
     |> Result.ok
   | _ => Error("something is not something");
+
 let log = value => {
   Console.log(Eval.show_value(value));
   Ok(Void);
@@ -21,7 +22,7 @@ let log = value => {
 let initial_env = [
   ("yes", Boolean(true)),
   ("no", Boolean(false)),
-  ("+", Native(plus)),
+  ("sum", Native(sum)),
   ("log", Native(log)),
 ];
 let initial_env = initial_env |> List.to_seq |> Env.of_seq;
