@@ -9,3 +9,5 @@ type t =
   | GREATER_THAN
   | WHITESPACE
   | EOF;
+
+type token = t;

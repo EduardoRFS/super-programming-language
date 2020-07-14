@@ -1,5 +1,5 @@
 {
-  "checksum": "16be2bde752252f950d3924b9927384d",
+  "checksum": "0a21b2193eac313d78c40ba39e49affc",
   "root": "super-programming-language@link-dev:./package.json",
   "node": {
     "super-programming-language@link-dev:./package.json": {
@@ -16,6 +16,7 @@
         "ocaml@4.10.0@d41d8cd9", "@reason-native/console@0.1.0@d41d8cd9",
         "@opam/sedlex@opam:2.2@ffde36c0",
         "@opam/ppx_deriving@opam:4.5@bb81afdc",
+        "@opam/menhir@opam:20200624@8629ff13",
         "@opam/dune@opam:2.6.1@e1bf507c", "@esy-ocaml/reason@3.6.0@d41d8cd9"
       ],
       "devDependencies": [

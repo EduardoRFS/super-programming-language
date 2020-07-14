@@ -1,5 +1,10 @@
+(menhir
+ (flags --external-tokens Token --explain)
+ (modules xml_parser))
+
 (library
  (name parser)
  (public_name super-programming-language.parser)
+ (libraries menhirLib)
  (preprocess
   (pps sedlex.ppx ppx_deriving.show)))
