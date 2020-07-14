@@ -8,6 +8,7 @@ type literal =
 
 [@deriving show]
 type expression =
+  | Void
   | Literal(literal)
   | Identifier(identifier)
   | Apply(expression, expression)

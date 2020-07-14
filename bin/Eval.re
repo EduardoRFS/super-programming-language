@@ -16,7 +16,8 @@ let (let.ok) = Result.bind;
 
 let rec eval = (env: Env.t(value), expr) =>
   switch (expr) {
-  | Ast.Literal(String(string)) => Ok(String(string))
+  | Ast.Void => Ok(Void)
+  | Literal(String(string)) => Ok(String(string))
   | Literal(Float(float)) => Ok(Float(float))
   | Identifier(identifier) =>
     Env.find_opt(identifier, env)
